@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-// - Does case matter - Assuming no, A == a
-// - What alphabet are we using - Assuming unicode
+// - Does case matter? Assuming no, A == a
+// - What alphabet are we using? Assuming unicode
 // - Is null a valid input, and if so what does it mean? Assuming no, it's not valid
 // - Are there any characters we want to ignore? Assuming we want to ignore spaces & punctuation
 
