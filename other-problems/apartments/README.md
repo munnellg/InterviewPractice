@@ -1,6 +1,6 @@
 # Apartments
 
-Seen on [Google Coding Interview With A Normal Software Engineer](https://www.youtube.com/watch?v=rw4s4M3hFfs&t=1030) by [Clément Mihailescu](https://www.youtube.com/channel/UCaO6VoaYJv4kS-TQO_M-N_g) and featuring (Keerti Purswani)[https://www.youtube.com/c/KeertiPurswani].
+Seen on [Google Coding Interview With A Normal Software Engineer](https://www.youtube.com/watch?v=rw4s4M3hFfs&t=1030) by [Clément Mihailescu](https://www.youtube.com/channel/UCaO6VoaYJv4kS-TQO_M-N_g) and featuring [Keerti Purswani](https://www.youtube.com/c/KeertiPurswani).
 
 ## Problem Description
 
@@ -14,6 +14,7 @@ You want to find an apartment that would minimize the farthest distance that you
 
 1. A list of blocks and their respective amenities
 
+```json
 Blocks = [
   {
     "gym": false,
@@ -41,10 +42,12 @@ Blocks = [
     "store": true
   }
 ]
-
+```
 2. A list of requirements comprised of the buildings that matter to you
 
+```json
 Reqs = [ "gym", "school", "store" ]
+```
 
 ### Output
 
@@ -53,4 +56,4 @@ For the sample input above, the expected output would be "3", the block in the 3
 ### Clarifications Requested in Video
 
 + *Can the buildings only be gym, school, and store*? There can be any number of buildings, but every block will contain information about all buildings i.e. you won't "discover" new buildings as you traverse the list of blocks.
-+ *Will the input are valid? Do I need to check if all buildings are present?* You can assume the input is valid
++ *Will the input alway be valid? Do I need to check if all buildings are present?* You can assume the input is valid
