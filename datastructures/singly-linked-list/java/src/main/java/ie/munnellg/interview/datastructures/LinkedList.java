@@ -32,6 +32,9 @@ public class LinkedList<T> implements List<T> {
 	}
 
 	private Node<T> nodeAt(int i) {
+		if (i < 0)         { return null; }
+		if (i == size - 1) { return tail; }
+
 		Node<T> p = head;
 		
 		// list is singly linked, so we always have to scan from front to index
@@ -64,15 +67,23 @@ public class LinkedList<T> implements List<T> {
 	}
 
 	private Node<T> removeAfter(Node<T> n) {
-		Node<T> ptr = n.next;
-		n.next = n.next.next;
-		
-		if (ptr == tail) {
+		Node<T> removed = (n == null)? head : n.next;
+
+		if (head == removed) {
+			head = removed.next;
+		}
+
+		if (tail == removed) {
 			tail = n;
 		}
 
+		if (n != null) {
+			n.next = removed.next;
+		}
+
 		size--;
-		return ptr;
+
+		return removed;
 	}
 
 	@Override
@@ -84,23 +95,7 @@ public class LinkedList<T> implements List<T> {
 	@Override
 	public void add(int i, T value) {
 		checkPositionBounds(i);
-
-		// will also update head
-		if (i == 0) {
-			this.prepend(value);
-			return;
-		}
-
-		// will also update tail
-		if (i == size) {
-			this.append(value);
-			return;
-		}
-
-		// insert in middle of list
-		Node<T> prev = nodeAt(i - 1);
-		prev.next = new Node(value, prev.next);
-		size++;
+		insertAfter(nodeAt(i - 1), value);
 	}
 
 	@Override
@@ -111,20 +106,17 @@ public class LinkedList<T> implements List<T> {
 
 	@Override
 	public boolean addAll(int i, Collection<? extends T> items) {
-		// TODO
-		throw new UnsupportedOperationException();
+		Node p = nodeAt(i - 1);
+		
+		for (T t : items) {
+			p = insertAfter(p, t);
+		}
+
+		return true;
 	}
 
 	public void append(T value) {
-		if (tail == null) {
-			tail = new Node(value, null);
-			head = tail;
-		} else {
-			tail.next = new Node(value, null);
-			tail = tail.next;
-		}
-
-		size++;
+		insertAfter(this.tail, value);
 	}
 
 	@Override
@@ -188,42 +180,17 @@ public class LinkedList<T> implements List<T> {
 	}
 
 	public Iterator<T> iterator() {
-		// TODO
-		throw new UnsupportedOperationException();
+		return new NodeIter(this);
 	}
 
 	public void prepend(T value) {
-		if (head == null) {
-			head = new Node(value, null);
-			tail = head;
-		} else {
-			head = new Node(value, head);
-		}
-		
-		size++;
+		insertAfter(null, value);
 	}
 
 	@Override
 	public T remove(int i) {
 		checkIndexBounds(i);
-		
-		Node<T> prev    = null;
-		Node<T> removed = null;
-
-		if (i == 0) {
-			removed = head;			
-		} else {
-			prev      = nodeAt(i - 1);
-			removed   = prev.next;
-			prev.next = removed.next;
-		}
-
-		if (tail == removed) { tail = prev; }
-		if (head == removed) { head = removed.next; }
-
-		size--;
-
-		return removed.data;
+		return this.removeAfter(nodateAt(i - 1));
 	}
 
 	@Override
@@ -366,6 +333,24 @@ public class LinkedList<T> implements List<T> {
 		public Node(T data, Node next) {
 			this.data = data;
 			this.next = next;
+		}
+	}
+
+	private class NodeIter implements Iterator {
+		private Node<T> ptr;
+
+		public NodeIter(Node<T> head) {
+			this.ptr = head;
+		}
+
+		public boolean hasNext() {
+			return this.ptr == null;
+		}
+
+		public T next() {
+			T data = this.ptr.data;
+			this.ptr = ptr.next;
+			return data;
 		}
 	}
 }
