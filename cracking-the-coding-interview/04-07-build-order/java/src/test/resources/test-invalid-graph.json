@@ -1,0 +1,10 @@
+{
+	"buildObjects": [
+		"a", "b", "c", "d", "e", "f"
+	],
+	"dependencies": [
+		{ "to": "a", "from": "d" },
+		{ "to": "d", "from": "b" },
+		{ "to": "b", "from": "a" },
+	]
+}
